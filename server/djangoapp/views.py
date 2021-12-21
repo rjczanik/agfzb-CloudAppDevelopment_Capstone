@@ -51,7 +51,7 @@ def login_request(request):
             return redirect('djangoapp:index')  # home page redirect
         else:
             # If not, return to login page again
-            #messages.error(request,'Invalid User Name or Password')
+            messages.error(request, 'Invalid User Name or Password')
             return render(request, 'djangoapp/index.html', context)
     else:
         return render(request, 'djangoapp/index.html', context)
@@ -111,7 +111,7 @@ def get_dealerships(request):
     context = {}
     if request.method == "GET":
         #url = "your-cloud-function-domain/dealerships/dealer-get"
-        url = "https://c2ba3bfa.us-south.apigw.appdomain.cloud/api/dealership"
+        url = "https://djangoserver-space.apic.mybluemix.net/api/dealership"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         #save to list to render in template
@@ -144,7 +144,7 @@ def get_dealer_details(request, dealer_id):
     context = {}
     if request.method == "GET":
         parameters = {"dealership": dealer_id}
-        url = "https://c2ba3bfa.us-south.apigw.appdomain.cloud/api/review"
+        url = "https://djangoserver-space.apic.mybluemix.net/api/review"
         reviews = get_dealer_reviews_id_from_cf(url, kwargs=parameters)
         print("get_dealer_details() --> (reviews):", reviews)
         #review_cat=' '.join([review.review for review in reviews])
@@ -195,7 +195,7 @@ def add_review(request, dealer_id):
         #review_payload_json=json.dumps(review_payload)
         #print("review_payload_json: ",review_payload_json)
 
-        review_post_url = "https://c2ba3bfa.us-south.apigw.appdomain.cloud/api/review"
+        review_post_url = "https://djangoserver-space.apic.mybluemix.net/api/review"
         parameters = {"dealership": dealer_id}
         print("parameters: ", parameters)
         post_response = post_request(
