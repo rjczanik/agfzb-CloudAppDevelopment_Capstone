@@ -5,7 +5,7 @@ on: workflow_dispatch
 # Environment variables available to all jobs and steps in this workflow
 env:
   IBM_CLOUD_REGION: us-south
-  IBM_CLOUD_GROUP: robert.czanik@gmail.com_1626078354278 / djangoserver-space
+  IBM_CLOUD_GROUP: djangoserver-space
   IBM_CLOUD_SPACE: dev
   IBM_CLOUD_ORG: robert.czanik@gmail.com
   MANIFEST_NAME: manifest.yml
