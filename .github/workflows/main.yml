@@ -5,9 +5,9 @@ on: workflow_dispatch
 # Environment variables available to all jobs and steps in this workflow
 env:
   IBM_CLOUD_REGION: us-south
-  IBM_CLOUD_GROUP: Default
-  IBM_CLOUD_SPACE: dev
-  IBM_CLOUD_ORG: robert.czanik@gmail.com
+  IBM_CLOUD_GROUP: IBM Full stack Course
+  IBM_CLOUD_SPACE: djangoserver-space
+  IBM_CLOUD_ORG: robert.czanik@gmail.com_1626078354278
   MANIFEST_NAME: manifest.yml
   IBM_CLOUD_API: ${{secrets.IBM_CLOUD_API_KEY}}
 
@@ -37,10 +37,10 @@ jobs:
         shell: bash
       - name: Select IBM Cloud resource group
         run: |
-          ibmcloud target -g "$IBM_CLOUD_GROUP"
+          ibmcloud target -g "$IBM_CLOUD_GROUP" -o "$IBM_CLOUD_ORG" -s "$IBM_CLOUD_SPACE"
         shell: bash
       - name: Target CF
-        run: ibmcloud target --cf-api https://api.$IBM_CLOUD_REGION.cf.cloud.ibm.com -r $IBM_CLOUD_REGION -o $IBM_CLOUD_ORG -s $IBM_CLOUD_SPACE -g $IBM_CLOUD_GROUP
+        run: ibmcloud target --cf-api https://api.$IBM_CLOUD_REGION.cf.cloud.ibm.com -r "$IBM_CLOUD_REGION" -o "$IBM_CLOUD_ORG" -s "$IBM_CLOUD_SPACE" -g "$IBM_CLOUD_GROUP"
         shell: bash
       - name: List all applications
         run: ibmcloud cf apps
