@@ -13,12 +13,12 @@ import requests
 
 
 def main(dict):
-    databaseName = "dealerships"
+    databaseName = "dealership"
 
     try:
         client = Cloudant.iam(
-            account_name=dict["COUCH_USERNAME"],
-            api_key=dict["IAM_API_KEY"],
+            account_name=dict["77409d8b-7b29-4012-9f11-7397fa8471d0-bluemix"],
+            api_key=dict["SYuLBU0NbYpfkunSquDMS_QE3iiD-afQLBifKCreb42o"],
             connect=True,
         )
         print("Databases: {0}".format(client.all_dbs()))

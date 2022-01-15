@@ -1,5 +1,6 @@
 import requests
 import json
+
 # import related models here
 from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
@@ -21,23 +22,33 @@ def get_request(url, **kwargs):
 
             print("params: ", params)
 
-            response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
-                                    auth=HTTPBasicAuth('apikey', kwargs["api_key"]))
+            response = requests.get(
+                url,
+                params=params,
+                headers={"Content-Type": "application/json"},
+                auth=HTTPBasicAuth("apikey", kwargs["api_key"]),
+            )
 
             print("Response_apikey_Provided: ", response)
 
         else:
             print("No api_key passed to get request.")
-        # Call get method of requests library with URL and parameters
-            response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                    params=kwargs)
+            # Call get method of requests library with URL and parameters
+            response = requests.get(
+                url, headers={"Content-Type": "application/json"}, params=kwargs
+            )
     except:
         # If any error occurs
+        response = requests.get(
+            url, headers={"Content-Type": "application/json"}, params=kwargs
+        )
         print("Network exception occurred")
+
     status_code = response.status_code
     print("With status {} ".format(status_code))
     json_data = json.loads(response.text)
     return json_data
+
 
 # Create a `post_request` to make HTTP POST requests
 # e.g., response = requests.post(url, params=kwargs, json=payload)
@@ -60,6 +71,7 @@ def post_request(url, payload, **kwargs):
 
     return json_data
 
+
 # Create a get_dealers_from_cf method to get dealers from a cloud function
 # def get_dealers_from_cf(url, **kwargs):
 # - Call get_request() with specified arguments
@@ -78,13 +90,22 @@ def get_dealers_from_cf(url, **kwargs):
             # Get its content in `doc` object
             dealer_doc = dealer["doc"]
             # Create a CarDealer object with values in `doc` object
-            dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"], full_name=dealer_doc["full_name"],
-                                   id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],
-                                   short_name=dealer_doc["short_name"],
-                                   st=dealer_doc["st"], state=dealer_doc["state"], zip=dealer_doc["zip"])
+            dealer_obj = CarDealer(
+                address=dealer_doc["address"],
+                city=dealer_doc["city"],
+                full_name=dealer_doc["full_name"],
+                id=dealer_doc["id"],
+                lat=dealer_doc["lat"],
+                long=dealer_doc["long"],
+                short_name=dealer_doc["short_name"],
+                st=dealer_doc["st"],
+                state=dealer_doc["state"],
+                zip=dealer_doc["zip"],
+            )
             results.append(dealer_obj)
 
     return results
+
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
 # def get_dealer_by_id_from_cf(url, dealerId):
@@ -94,7 +115,7 @@ def get_dealers_from_cf(url, **kwargs):
 
 def get_dealer_reviews_id_from_cf(url, **kwargs):
     results = []
-    parameters = kwargs['kwargs']
+    parameters = kwargs["kwargs"]
 
     json_result = get_request(url, **parameters)
 
@@ -102,17 +123,17 @@ def get_dealer_reviews_id_from_cf(url, **kwargs):
         reviews = json_result["body"]["data"]["docs"]
         for review in reviews:
             review_obj = DealerReview(
-                #car_make=review["car_make"],
-                #car_model=review["car_model"],
-                #car_year=review["car_year"],
+                # car_make=review["car_make"],
+                # car_model=review["car_model"],
+                # car_year=review["car_year"],
                 dealership=review["dealership"],
-                #id=review["id"],
+                # id=review["id"],
                 name=review["name"],
                 purchase=review["purchase"],
-                #purchase_date=review["purchase_date"],
+                # purchase_date=review["purchase_date"],
                 review=review["review"],
-                #sentiment="default"
-                )
+                # sentiment="default"
+            )
 
             if "id" in review:
                 review_obj.id = review["id"]
@@ -125,19 +146,21 @@ def get_dealer_reviews_id_from_cf(url, **kwargs):
             if "car_year" in review:
                 review_obj.car_year = review["car_year"]
 
-            #sentiment="default"
+            # sentiment="default"
             print("Sentiment: ", review_obj.sentiment)
-            #review_obj.sentiment=analyze_review_sentiments(review_obj.review)
+            # review_obj.sentiment=analyze_review_sentiments(review_obj.review)
             sentiment_response = analyze_review_sentiments(review_obj.review)
             print("Sentiment_(NLU_RAW): ", sentiment_response)
             if "sentiment" in sentiment_response:
-                #Extrat Sentiment Label
-                review_obj.sentiment = sentiment_response['sentiment']['document']['label']
+                # Extrat Sentiment Label
+                review_obj.sentiment = sentiment_response["sentiment"]["document"][
+                    "label"
+                ]
             else:
-                review_obj.sentiment = sentiment_response['error']
+                review_obj.sentiment = sentiment_response["error"]
             print("Sentiment_(NLU_label_extract): ", review_obj.sentiment)
             results.append(review_obj)
-            #print(results)
+            # print(results)
 
     return results
 
@@ -154,7 +177,7 @@ def analyze_review_sentiments(dealer_review):
         "text": dealer_review,
         "version": "2021-08-01",
         "features": "sentiment",
-        "return_analyzed_text": True
+        "return_analyzed_text": True,
     }
 
     json_result = get_request(api_url, **parameters)
