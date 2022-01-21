@@ -22,6 +22,9 @@ import json
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
+account_name = ("77409d8b-7b29-4012-9f11-7397fa8471d0-bluemix",)
+api_key = ("SYuLBU0NbYpfkunSquDMS_QE3iiD-afQLBifKCreb42o",)
+
 
 # Create your views here.
 

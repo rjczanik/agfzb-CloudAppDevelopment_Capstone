@@ -9,7 +9,11 @@ from requests.auth import HTTPBasicAuth
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
-def get_request(url, **kwargs):
+def get_request(url):
+    kwargs = {
+        "account_name": "77409d8b-7b29-4012-9f11-7397fa8471d0-bluemix",
+        "api_key": "SYuLBU0NbYpfkunSquDMS_QE3iiD-afQLBifKCreb42o",
+    }
     print(kwargs)
     print("GET from {} ".format(url))
     try:
