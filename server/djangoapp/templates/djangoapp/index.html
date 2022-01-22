@@ -14,12 +14,12 @@
 </head>
 
     <body>
-    <!--Add a nav bar here -->
+    <!-- Remove this line the first time you edit this file -->
     <center><h1>Best Car DealerShip Website</h1></center>
     <p></p>
     <!--Add a nav bar here -->
     <nav class="navbar navbar-light bg-light">
-      <div class="container-fluid">
+    <div class="container-fluid">
         <div class="navbar-header">
               <a class="navbar-brand" href="#">Main</a>
         </div>
@@ -43,51 +43,30 @@
                 </li>
                 {% endif %}
               </ul>
-      </div>
-    </nav>
 
 
+    </div>
+</nav>
     <!--Add a dealer table here -->
-    <table class="table" id="table" data-filter-control="true">
-         <thead>
-             <tr>
-                 <th data-field="id">ID</th>
-                 <th data-field="full_name">Full_Name</th>
-                 <th data-field="city">City</th>
-                 <th data-field="state" data-filter-control="select">State</th>
-                 <th data-field="address">Address</th>
-                 <th data-field="zip">Zip</th>
-             </tr>
-         </thead>
-         <tbody>
-             {% for dealer in dealer_list %}
-                 <tr>
-                     <td>{{dealer.id}}</td>
-                     <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.full_name}}</a></td>
-                     <td>{{dealer.city}}</td>
-                     <td>{{dealer.state}}</td>
-                     <td>{{dealer.address}}</td>
-                     <td>{{dealer.zip}}</td>
-                 </tr>
-             {% endfor %}
-         </tbody>
-     </table>
-     </body>
- <script>
-     $(function() {
-         $('#table').bootstrapTable()
-     })
- </script>
- <!-- Footer for Adding Contact Us Page Link-->
- <footer>
-     <div class="container-fluid">
-         <a class="btn btn-link" href="{% url 'djangoapp:contact' %}">
-             Contact Us
-         </a>
-     </div>
-     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-         © 2021 Copyright:
-         <a class="text-white" href="https://github.com/HilbertSpecs">HilbertSpecs</a>
-     </div>
- </footer>
- </html>
+
+    <h2><center>Dealer's Table</center></h2>
+    <table style="width:50%">
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Age</th>
+  </tr>
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td>
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td>
+    <td>94</td>
+  </tr>
+</table>
+    </body>
+
+</html>
