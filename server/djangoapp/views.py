@@ -40,7 +40,7 @@ def contact(request):
     context = {}
     if request.method == "POST":
         context["message"] = "Your message has been sent."
-    return render(request, "djangoapp/contact.html", context)
+    return render(request, "djangoapp/contact_us.html", context)
 
 
 # Create a `login_request` view to handle sign in request
