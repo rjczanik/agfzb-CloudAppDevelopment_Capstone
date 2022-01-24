@@ -1,18 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Contact Us</title>
-        {% load static %}
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    </head>
-<h1>
-Contact Us
-</h1>
-<address>
-Best Cars<br>
-127 Best Car Avenue<br>
-San Francisco,CA 94117<br>
-</address>
-<a href="tel:7777777777">777-777-7777</a>
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us - Best Cars Dealership</title>
+    {% load static %}
+    <script src="{% static './custom/js/main.js' %}" type="text/javascript"></script>
+    <script src="{% static './custom/js/owl.carousel.min.js' %}" type="text/javascript"></script>
+    <script src="{% static './custom/js/jquery.sticky.js' %}" type="text/javascript"></script>
+    <script src="{% static './custom/contact/js/main.js' %}" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="{% static './custom/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static './custom/css/style.css' %}">
+    <link rel="stylesheet" href="{% static './custom/css/about.css' %}">
+    <link rel="stylesheet" href="{% static './custom/contact/css/style.css' %}">
+    <link rel="stylesheet" href="{% static './custom/fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static './custom/contact/css/animate.css' %}">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    <script src="https://kit.fontawesome.com/b4a3871984.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!--Add a nav bar here -->
+     <header class="site-navbar site-navbar-target" role="banner">
+
+        <div class="container-fluid">
+          <div class="row align-items-center position-relative">
+
+            <div class="col-3" style="padding-bottom: 10px !important;">
+              <div class="site-logo">
+                <a href="{% url 'djangoapp:index' %}" class="font-weight-bold"><img src="{% static './custom/images/logo.png' %}" width="200px" height="50px"></a>
+              </div>
+            </div>
+
+            <div class="col-9 text-right" style="padding-top: 8px !important;padding-left: 33px !important;">
+
+
+              <span class="d-inline-block d-lg-none"><a href="#" class="text-primary site-menu-toggle js-menu-toggle py-5"><span class="icon-menu h3 text-white"></span></a></span>
+
+
+              <nav class="site-navigation text-center ml-auto d-none d-lg-block" role="navigation" style="padding-left: 60px !important; ">
+                <ul class="site-menu main-menu js-clone-nav ml-auto ">
+                  <li><a href="{% url 'djangoapp:index' %}" class="nav-link">Home</a></li>
+                  <li><a href="{% url 'djangoapp:about' %}" class="nav-link">About Us</a></li>
+                  <li class="active"><a href="#" class="nav-link">Contact Us</a></li>
+                {% if user.is_authenticated %}
+                    <li style="float: right;padding-right: 150px;">
+                        <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                        <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                <form action="{% url 'djangoapp:signup' %}" method="GET" class="login-container text-right ml-auto d-none d-lg-block">
+                    <button type="submit" class="btn btn-custom-reverse" >Sign Up</button>
+                </form>
+
+                <form action="{% url 'djangoapp:login' %}" method="POST" class="login-container text-right ml-auto d-none d-lg-block">
+                    {% csrf_token %}
+                    <input type="text" placeholder="Username" name="username" class="form-control">
+                    <input type="text" placeholder="Password" name="pwd" class="form-control">
+
+                    <button type="submit" class="btn btn-custom">Login</button>
+                </form>
+
+                {% endif %}
+
+
+                </ul>
+              </nav>
+
+
+
+
+            </div>
+
+
+          </div>
+        </div>
+
+      </header>
+
+    <div class="hero"></div>
+    <section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-10 col-md-12">
+					<div class="wrapper">
+						<div class="row no-gutters">
+							<div class="col-md-7 d-flex align-items-stretch">
+								<div class="contact-wrap w-100 p-md-5 p-4">
+									<h3 class="mb-4 aboutus-title">Contact Us</h3>
+									<div id="form-message-warning" class="mb-4"></div>
+                                    {% if message %}
+                                    <div class="alert alert-success" role="alert">
+                                        {{message}}
+                                    </div>
+                                    {% endif %}
+
+									<form method="POST" id="contactForm" name="contactForm" action="{% url 'djangoapp:contact' %}">
+                                        {% csrf_token %}
+                                        <div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group">
+													<input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group">
+													<textarea name="message" class="form-control" id="message" cols="30" rows="7" placeholder="Message" required></textarea>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group">
+													<input type="submit" value="Send Message" class="btn btn-custom">
+													<div class="submitting"></div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div class="col-md-5 d-flex align-items-stretch">
+								<div class="info-wrap bg-custom w-100 p-lg-5 p-4">
+									<h3 class="mb-4 mt-md-4 contactus-title" style="font-size: x-large;">Contact Information</h3>
+				        	<div class="dbox w-100 d-flex align-items-start">
+				        		<div class="icon d-flex align-items-center justify-content-center">
+				        			<span class="fa fa-map-marker"></span>
+				        		</div>
+				        		<div class="text pl-3">
+                                <p style="color: white;"><span>Address:</span> 198 West 21th Street, New York, USA</p>
+					          </div>
+				          </div>
+				        	<div class="dbox w-100 d-flex align-items-center">
+				        		<div class="icon d-flex align-items-center justify-content-center">
+				        			<span class="fa fa-phone"></span>
+				        		</div>
+				        		<div class="text pl-3">
+					            <p><span>Phone:</span> <a href="#">+ 1 234 5678 91</a></p>
+					          </div>
+				          </div>
+				        	<div class="dbox w-100 d-flex align-items-center">
+				        		<div class="icon d-flex align-items-center justify-content-center">
+				        			<span class="fa fa-paper-plane"></span>
+				        		</div>
+				        		<div class="text pl-3">
+					            <p><span>Email:</span> <a href="#">contact@bestcars.com</a></p>
+					          </div>
+				          </div>
+				        	<div class="dbox w-100 d-flex align-items-center">
+				        		<div class="icon d-flex align-items-center justify-content-center">
+				        			<span class="fa fa-globe"></span>
+				        		</div>
+				        		<div class="text pl-3">
+					            <p><span>Website:</span> <a href="#">bestcars.com</a></p>
+					          </div>
+				          </div>
+			          </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+
 </html>

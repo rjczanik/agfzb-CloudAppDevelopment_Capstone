@@ -2,17 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dealership Review</title>
+    <title>Sign Up - Best Cars Dealership</title>
     {% load static %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static './custom/login/vendor/animate/animate.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static './custom/login/vendor/animsition/css/animsition.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static './custom/login/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static './custom/login/css/main.css' %}">
+
+    <script src="{% static './custom/login/vendor/animsition/js/animsition.min.js' %}"></script>
+    <script src="{% static './custom/login/js/main.js' %}"></script>
+    <script src="https://kit.fontawesome.com/b4a3871984.js" crossorigin="anonymous"></script>
 </head>
-
     <body>
+    <div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form" method="POST" action="{% url 'djangoapp:signup' %}">
+                    {% csrf_token %}
+                    <span class="login100-form-logo">
+						<i class="fas fa-user"></i>
+					</span>
 
-    <!--Add a nav bar here -->
+					<span class="login100-form-title p-b-34 p-t-27">
+						Sign Up
+					</span>
 
-    <!-- Add reviews as cards -->
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input class="input100" type="text" name="username" placeholder="Username" required>
+						<span class="focus-input100" data-placeholder="&#xf007;"></span>
+					</div>
 
+					<div class="wrap-input100 validate-input" data-validate="Enter first name">
+						<input class="input100" type="text" name="first_name" placeholder="First Name" required>
+						<span class="focus-input100" data-placeholder="&#xf007;"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Enter last name">
+						<input class="input100" type="text" name="last_name" placeholder="Last Name" required>
+						<span class="focus-input100" data-placeholder="&#xf007;"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input class="input100" type="password" name="pwd" placeholder="Password" required>
+						<span class="focus-input100" data-placeholder="&#xf023;"></span>
+                    </div>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Sign Up
+						</button>
+					</div>
+
+					<div class="text-center p-t-90">
+						<a class="txt1" href="{% url 'djangoapp:login' %}">
+							Already have an account!
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="dropDownSelect1"></div>
     </body>
-
 </html>
